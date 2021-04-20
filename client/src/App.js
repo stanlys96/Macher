@@ -1,40 +1,30 @@
 import './App.css';
-import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import Home from './pages/Home';
-import Register from './pages/Register';
-import Login from './pages/Login';
-import EmailVerified from './pages/EmailVerified';
-import ForgotPassword from './pages/ForgotPassword';
-import ResetPassword from './pages/ResetPassword';
-import UserProfile from './pages/UserProfile';
+import routes from './routes/index';
+const GuardedRoute = ({ component: Home, auth, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    !localStorage.getItem('userFullName')
+    ? <Home {...props} />
+    : <Redirect to='/profile' />
+  )} /> 
+)
 
 function App() {
   return (
     <Router>
-      <Navbar />
+      <Navbar />      
       <Switch>
-        <Route exact path="/active/:token">
-          <EmailVerified />
-        </Route>
-        <Route exact path="/index">
-          <Home />
-        </Route>
-        <Route exact path="/register">
-          <Register />
-        </Route>
-        <Route exact path="/login">
-          <Login />
-        </Route>
-        <Route exact path="/forgot-password">
-          <ForgotPassword />
-        </Route>
-        <Route exact path="/reset-password">
-          <ResetPassword />
-        </Route>
-        <Route exact path="/profile">
-          <UserProfile />
-        </Route>
+        {
+          routes.map((route, i) => (
+            <Route
+              key={route.id}
+              path={route.path}
+              component={route.component}
+              exact={route.exact}
+            />
+          ))
+        }
       </Switch>
     </Router>
   );
