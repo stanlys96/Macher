@@ -7,6 +7,8 @@ import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
 import Style from "style-it";
 import { toastSuccess } from '../styling/swal';
+import { useSelector, useDispatch } from 'react-redux';
+import { setUser } from '../store/action';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -30,7 +32,10 @@ const useStyles = makeStyles((theme) => ({
 function Navbar() {
   const history = useHistory();
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [userFullName, setUserFullName] = useState(localStorage.getItem('userFullName'));
+  const user = useSelector(state => state.user.user);
+  console.log(user, "<<< ay")
   function toHome(e) {
     e.preventDefault();
     history.push('/index');
@@ -40,8 +45,10 @@ function Navbar() {
     localStorage.clear();
     history.push('/index');
     toastSuccess('Successfully logged out!');
+    dispatch(setUser({ isLoggedIn: false }));
   }
   useEffect(() => {
+    setUserFullName(localStorage.getItem('userFullName'));
   }, [localStorage.getItem('userFullName')])
   return Style.it(`
       .myLink {

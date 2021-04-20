@@ -53,7 +53,7 @@ function ForgotPassword() {
       }
     })
     if (data.data.forgotPassword.message) {
-      return swalFire(data.data.forgotPassword.message);
+      return swalFire('Message: ', data.data.forgotPassword.message);
     } else {
       setEmail('');
       swalOK('Check your email for link to reset password!');

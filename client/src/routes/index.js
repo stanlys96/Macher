@@ -1,54 +1,78 @@
-import Home from '../pages/Home';
-import Register from '../pages/Register';
-import Login from '../pages/Login';
-import EmailVerified from '../pages/EmailVerified';
-import ForgotPassword from '../pages/ForgotPassword';
-import ResetPassword from '../pages/ResetPassword';
-import UserProfile from '../pages/UserProfile';
+import { Route, Redirect } from 'react-router-dom';
 
-const routes = [
-  {
-    id: 1,
-    path: "/index",
-    component: Home,
-    exact: true
-  },
-  {
-    id: 2,
-    path: "/login",
-    component: Login,
-    exact: true
-  },
-  {
-    id: 3,
-    path: "/active/:token",
-    component: EmailVerified,
-    exact: true
-  },
-  {
-    id: 4,
-    path: "/register",
-    component: Register,
-    exact: true
-  },
-  {
-    id: 5,
-    path: "/forgot-password",
-    component: ForgotPassword,
-    exact: true
-  },
-  {
-    id: 6,
-    path: "/reset-password",
-    component: ResetPassword,
-    exact: true
-  },
-  {
-    id: 7,
-    path: "/profile",
-    component: UserProfile,
-    exact: true
-  }
-]
+export const HomeRoute = ({ component: Home, auth, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    !localStorage.getItem('userFullName')
+    ? <Home {...props} />
+    : <Redirect to='/profile' />
+  )} /> 
+);
 
-export default routes;
+export const RegisterRoute = ({ component: Register, auth, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    !localStorage.getItem('userFullName')
+    ? <Register {...props} />
+    : <Redirect to='/profile' />
+  )} /> 
+);
+
+export const LoginRoute = ({ component: Login, auth, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    !localStorage.getItem('userFullName')
+    ? <Login {...props} />
+    : <Redirect to='/profile' />
+  )} /> 
+);
+
+export const ForgotPasswordRoute = ({ component: ForgotPassword, auth, ...rest }) => (
+  <Route {...rest} render={(props) => (
+    !localStorage.getItem('userFullName')
+    ? <ForgotPassword {...props} />
+    : <Redirect to='/profile' />
+  )} /> 
+);
+
+// const routes = [
+//   {
+//     id: 1,
+//     path: "/index",
+//     component: Home,
+//     exact: true
+//   },
+//   {
+//     id: 2,
+//     path: "/login",
+//     component: Login,
+//     exact: true
+//   },
+//   {
+//     id: 3,
+//     path: "/active/:token",
+//     component: EmailVerified,
+//     exact: true
+//   },
+//   {
+//     id: 4,
+//     path: "/register",
+//     component: Register,
+//     exact: true
+//   },
+//   {
+//     id: 5,
+//     path: "/forgot-password",
+//     component: ForgotPassword,
+//     exact: true
+//   },
+//   {
+//     id: 6,
+//     path: "/reset-password",
+//     component: ResetPassword,
+//     exact: true
+//   },
+//   {
+//     id: 7,
+//     path: "/profile",
+//     component: UserProfile,
+//     exact: true
+//   }
+// ]

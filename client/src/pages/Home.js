@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Style from "style-it";
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
@@ -13,6 +13,7 @@ function Home() {
     e.preventDefault();
     history.push('/login');
   }
+  localStorage.setItem('isLoggedIn', false);
   return Style.it(`
       .homeBackground {
         background-color: rgba(0, 0, 0, 0.7);

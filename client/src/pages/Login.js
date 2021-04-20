@@ -11,6 +11,8 @@ import Grid from '@material-ui/core/Grid';
 import { useMutation } from '@apollo/client';
 import { LOGIN } from '../graph/index';
 import { swalOK, swalFire } from '../styling/swal';
+import { useDispatch } from 'react-redux';
+import { setUser } from '../store/action';
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -61,6 +63,7 @@ function SimpleBottomNavigation() {
 }
 
 function Login() {
+  const dispatch = useDispatch();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const classes = useStyles();
@@ -85,6 +88,8 @@ function Login() {
       setPassword('');
       localStorage.setItem('userFullName', user.data.login.full_name);
       localStorage.setItem('userEmail', user.data.login.email);
+      localStorage.setItem('isLoggedIn', true);
+      dispatch(setUser({ isLoggedIn: true }));
       history.push('/profile');
     } else {
       swalFire('Message: ', user.data.login.message);

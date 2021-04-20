@@ -13,7 +13,6 @@ function EmailVerified() {
       input: token
     } 
   })
-  console.log(token);
   function toLogin(e) {
     e.preventDefault();
     history.push('/login');

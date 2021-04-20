@@ -1,30 +1,29 @@
 import './App.css';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Navbar from './components/Navbar';
-import routes from './routes/index';
-const GuardedRoute = ({ component: Home, auth, ...rest }) => (
-  <Route {...rest} render={(props) => (
-    !localStorage.getItem('userFullName')
-    ? <Home {...props} />
-    : <Redirect to='/profile' />
-  )} /> 
-)
+import { HomeRoute, RegisterRoute, LoginRoute, ForgotPasswordRoute } from './routes/index';
+import Home from './pages/Home';
+import Register from './pages/Register';
+import Login from './pages/Login';
+import EmailVerified from './pages/EmailVerified';
+import ForgotPassword from './pages/ForgotPassword';
+import ResetPassword from './pages/ResetPassword';
+import UserProfile from './pages/UserProfile';
 
 function App() {
   return (
     <Router>
       <Navbar />      
       <Switch>
-        {
-          routes.map((route, i) => (
-            <Route
-              key={route.id}
-              path={route.path}
-              component={route.component}
-              exact={route.exact}
-            />
-          ))
-        }
+        <Route exact path="/active/:token">
+          <EmailVerified />
+        </Route>
+        <HomeRoute path="/index" component={Home} />
+        <RegisterRoute path="/register" component={Register} />
+        <LoginRoute path="/login" component={Login} />
+        <ForgotPasswordRoute path="/forgot-password" component={ForgotPassword} />
+        <UserProfile exact path="/profile" />
+        <ResetPassword exact path="/reset-password" />
       </Switch>
     </Router>
   );

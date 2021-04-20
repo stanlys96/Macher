@@ -1,6 +1,6 @@
 const initialState = {
   user: {
-    isLoggedIn: false
+    isLoggedIn: localStorage.getItem('isLoggedIn')
   }
 }
 
