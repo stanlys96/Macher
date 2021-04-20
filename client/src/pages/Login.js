@@ -64,6 +64,7 @@ function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const classes = useStyles();
+  const history = useHistory();
   const [loggingIn, { data }] = useMutation(LOGIN);
   const handleSubmit = async(e) => {
     e.preventDefault();
@@ -82,6 +83,9 @@ function Login() {
       swalOK('Successfully logged in!');
       setEmail('');
       setPassword('');
+      localStorage.setItem('userFullName', user.data.login.full_name);
+      localStorage.setItem('userEmail', user.data.login.email);
+      history.push('/profile');
     } else {
       swalFire(user.data.login.message);
     }
