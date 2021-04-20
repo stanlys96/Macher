@@ -35,7 +35,7 @@ class UserController {
         })
   
         let info = await transporter.sendMail({
-          from: '"Fred Foo 👻" <stanly.example@gmail.com>', 
+          from: '"Stanly Foo 👻" <stanly.example@gmail.com>', 
           to: req.body.email, 
           subject: "Verify Email", 
           text: "Hello world", 
