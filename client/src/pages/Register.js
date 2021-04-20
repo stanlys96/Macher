@@ -69,7 +69,7 @@ function Register() {
   const classes = useStyles();
   const [registering, { data }] = useMutation(REGISTER);
   const { loading, error, data: userData } = useQuery(GET_USERS);
-  const handleSubmit = (e) => {
+  const handleSubmit = async(e) => {
     e.preventDefault();
     const validate = validateInput(fullName, email, password);
     if (validate === "fill_input") {
@@ -79,28 +79,23 @@ function Register() {
     } else if (validate === 'email_validation') {
       swalFire('Input validation', 'Invalid email format!')
     } else {
-      let found = false;
-      userData.getUsers.forEach(data => {
-        if (data.email == email) {
-          found = true;
-          swalFire('Input validation', 'Email address is already taken!')
-        }
-      })
-      if (!found) {
-        registering({
-          variables: {
-            input: {
-              full_name: fullName,
-              email,
-              password
-            }
-          }, refetchQueries: [{ query: GET_USERS }]
-        })
+      const data = await registering({
+        variables: {
+          input: {
+            full_name: fullName,
+            email,
+            password
+          }
+        }, refetchQueries: [{ query: GET_USERS }]
+      });
+      if (!data.data.register.message) {
         setFullName('');
         setEmail('');
         setPassword('');
         swalOK('Check your email for verification!');
         history.push('/login');
+      } else {
+        swalFire('Message: ', data.data.register.message);
       }
     }
   }

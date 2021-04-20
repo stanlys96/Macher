@@ -35,7 +35,6 @@ function Navbar() {
   const dispatch = useDispatch();
   const [userFullName, setUserFullName] = useState(localStorage.getItem('userFullName'));
   const user = useSelector(state => state.user.user);
-  console.log(user, "<<< ay")
   function toHome(e) {
     e.preventDefault();
     history.push('/index');
