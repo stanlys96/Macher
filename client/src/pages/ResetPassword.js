@@ -46,10 +46,10 @@ function ResetPassword() {
   function handleSubmit(e) {
     e.preventDefault();
     if (password1 !== password2) {
-      return swalFire('Password do not match!')
+      return swalFire('Input validation', 'Password do not match!')
     } else {
       if (password1.length < 6) {
-        return swalFire('Password length minimum is 6 characters!');
+        return swalFire('Input validation', 'Password length minimum is 6 characters!');
       }
       resetPassword({
         variables: {

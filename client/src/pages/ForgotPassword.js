@@ -45,7 +45,7 @@ function ForgotPassword() {
   async function handleSubmit(e) {
     e.preventDefault();
     if (email === "") {
-      return swalFire('Input must be filled!');
+      return swalFire('Input validation', 'Input must be filled!');
     }
     const data = await forgotPassword({
       variables: {
@@ -57,6 +57,7 @@ function ForgotPassword() {
     } else {
       setEmail('');
       swalOK('Check your email for link to reset password!');
+      history.push('/login');
       localStorage.setItem('forgotPasswordEmail', email);
     }
   }

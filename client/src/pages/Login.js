@@ -69,7 +69,7 @@ function Login() {
   const handleSubmit = async(e) => {
     e.preventDefault();
     if (email === '' || password === '') {
-      return swalFire('All inputs must be filled!');
+      return swalFire('Input validation', 'All inputs must be filled!');
     }
     const user = await loggingIn({
       variables: {
@@ -87,7 +87,7 @@ function Login() {
       localStorage.setItem('userEmail', user.data.login.email);
       history.push('/profile');
     } else {
-      swalFire(user.data.login.message);
+      swalFire('Message: ', user.data.login.message);
     }
   }
   return Style.it(`

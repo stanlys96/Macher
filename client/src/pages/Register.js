@@ -40,6 +40,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
+
 function SimpleBottomNavigation() {
   const classes = useStyles();
   const [value, setValue] = React.useState(0);
@@ -64,6 +65,7 @@ function Register() {
   const [fullName, setFullName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
   const classes = useStyles();
   const [registering, { data }] = useMutation(REGISTER);
   const { loading, error, data: userData } = useQuery(GET_USERS);
@@ -71,17 +73,17 @@ function Register() {
     e.preventDefault();
     const validate = validateInput(fullName, email, password);
     if (validate === "fill_input") {
-      swalFire('All inputs must be filled!')
+      swalFire('Input validation', 'All inputs must be filled!')
     } else if (validate === 'password_length') {
-      swalFire('Password length minimum is 6 characters!')
+      swalFire('Input validation', 'Password length minimum is 6 characters!')
     } else if (validate === 'email_validation') {
-      swalFire('Invalid email format!')
+      swalFire('Input validation', 'Invalid email format!')
     } else {
       let found = false;
       userData.getUsers.forEach(data => {
         if (data.email == email) {
           found = true;
-          swalFire('Email address is already taken!')
+          swalFire('Input validation', 'Email address is already taken!')
         }
       })
       if (!found) {
@@ -97,7 +99,8 @@ function Register() {
         setFullName('');
         setEmail('');
         setPassword('');
-        swalOK('Check your email for verification!')
+        swalOK('Check your email for verification!');
+        history.push('/login');
       }
     }
   }

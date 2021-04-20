@@ -11,10 +11,10 @@ export const Toast = Swal.mixin({
   }
 })
 
-export const swalFire = (message) => {
+export const swalFire = (title, message) => {
   return Swal.fire({
     icon: 'error',
-    title: 'Oops...',
+    title,
     text: message
   })
 }
